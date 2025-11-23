@@ -1,0 +1,13 @@
+{
+  "android": {
+    "package": "com.businesscard2025.swapcontactnew"
+  },
+  "ios": {
+    "bundleIdentifier": "com.businesscard2025.swapcontactnew"
+  },
+  "extra": {
+    "eas": {
+      "projectId": "a744c033-7f7d-4fea-ba2b-7adb8fc59952"
+    }
+  }
+}

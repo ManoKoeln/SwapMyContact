@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <canvas id="canvas" width="1024" height="1024"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Hintergrund weiß
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 1024, 1024);
+        
+        // Blauer QR-Code Rahmen
+        ctx.strokeStyle = '#2E9BFF';
+        ctx.lineWidth = 40;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.strokeRect(120, 120, 784, 784);
+        
+        // Innere QR-Code Elemente (vereinfacht)
+        ctx.fillStyle = '#2E9BFF';
+        
+        // Drei QR-Ecken
+        const cornerSize = 180;
+        const gap = 60;
+        
+        // Oben links
+        ctx.fillRect(180, 180, cornerSize, cornerSize);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(220, 220, 100, 100);
+        
+        // Oben rechts
+        ctx.fillStyle = '#2E9BFF';
+        ctx.fillRect(664, 180, cornerSize, cornerSize);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(704, 220, 100, 100);
+        
+        // Unten links
+        ctx.fillStyle = '#2E9BFF';
+        ctx.fillRect(180, 664, cornerSize, cornerSize);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(220, 704, 100, 100);
+        
+        // Zentrale QR-Elemente (dekorativ)
+        ctx.fillStyle = '#2E9BFF';
+        ctx.fillRect(400, 400, 80, 80);
+        ctx.fillRect(520, 400, 80, 80);
+        ctx.fillRect(640, 400, 80, 80);
+        ctx.fillRect(400, 520, 80, 80);
+        ctx.fillRect(640, 520, 80, 80);
+        ctx.fillRect(400, 640, 80, 80);
+        ctx.fillRect(520, 640, 80, 80);
+        ctx.fillRect(640, 640, 80, 80);
+        
+        // Wellenförmige Linie (stilisierte Verbindung)
+        ctx.strokeStyle = '#2E9BFF';
+        ctx.lineWidth = 30;
+        ctx.beginPath();
+        ctx.moveTo(520, 520);
+        ctx.bezierCurveTo(560, 480, 600, 560, 640, 520);
+        ctx.stroke();
+        
+        // Text "SwapContact" unten
+        ctx.fillStyle = '#2C3E50';
+        ctx.font = 'bold 140px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('SwapContact', 512, 950);
+        
+        // Export als PNG
+        canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'icon.png';
+            a.click();
+        });
+    </script>
+</body>
+</html>

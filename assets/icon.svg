@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hintergrund -->
+  <rect width="1024" height="1024" fill="#FFFFFF"/>
+  
+  <!-- Äußerer QR-Rahmen -->
+  <rect x="120" y="120" width="784" height="784" 
+        fill="none" stroke="#2E9BFF" stroke-width="40" rx="50"/>
+  
+  <!-- QR-Ecke oben links -->
+  <rect x="180" y="180" width="180" height="180" fill="#2E9BFF"/>
+  <rect x="220" y="220" width="100" height="100" fill="#FFFFFF"/>
+  
+  <!-- QR-Ecke oben rechts -->
+  <rect x="664" y="180" width="180" height="180" fill="#2E9BFF"/>
+  <rect x="704" y="220" width="100" height="100" fill="#FFFFFF"/>
+  
+  <!-- QR-Ecke unten links -->
+  <rect x="180" y="664" width="180" height="180" fill="#2E9BFF"/>
+  <rect x="220" y="704" width="100" height="100" fill="#FFFFFF"/>
+  
+  <!-- Zentrale QR-Elemente -->
+  <rect x="400" y="400" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="520" y="400" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="640" y="400" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="400" y="520" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="640" y="520" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="400" y="640" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="520" y="640" width="80" height="80" fill="#2E9BFF"/>
+  <rect x="640" y="640" width="80" height="80" fill="#2E9BFF"/>
+  
+  <!-- Verbindungslinie -->
+  <path d="M 520 520 Q 560 480 600 520 Q 640 560 680 540" 
+        stroke="#2E9BFF" stroke-width="30" fill="none" stroke-linecap="round"/>
+  
+</svg>
