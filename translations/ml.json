@@ -1,0 +1,121 @@
+{
+  "homeScreen": {
+    "title": "SwapMyContact",
+    "editProfile": "പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക",
+    "appQR": "SwapMyContact - App",
+    "scanQR": "Scan QR",
+    "scannedCards": "Scanned Cards"
+  },
+  "profileList": {
+    "title": "എന്റെ പ്രൊഫൈലുകൾ",
+    "addProfile": "+ പ്രൊഫൈൽ സൃഷ്ടിക്കുക (1/1 Basic)",
+    "addProfilePremium": "+ പുതിയ പ്രൊഫൈൽ",
+    "premiumFeature": "പ്രീമിയം സവിശേഷത",
+    "premiumMessage": "അടിസ്ഥാന പതിപ്പിൽ, ഒരു പ്രൊഫൈൽ മാത്രമേ സൃഷ്ടിക്കാൻ കഴിയൂ. പരിധിയില്ലാത്ത പ്രൊഫൈലുകൾക്കായി പ്രീമിയത്തിലേക്ക് അപ്ഗ്രേഡ് ചെയ്യുക!",
+    "premiumHint": "💎 പ്രീമിയം: പരിധിയില്ലാത്ത പ്രൊഫൈലുകൾ സൃഷ്ടിക്കുക!",
+    "deleteTitle": "പ്രൊഫൈൽ ഇല്ലാതാക്കുക",
+    "deleteMessage": "നിങ്ങൾക്ക് ഈ പ്രൊഫൈൽ ഇല്ലാതാക്കണമെന്ന് ഉറപ്പാണോ?",
+    "noProfiles": "ഇതുവരെ പ്രൊഫൈലുകളൊന്നുമില്ല.",
+    "createFirst": "നിങ്ങളുടെ ആദ്യ പ്രൊഫൈൽ സൃഷ്ടിക്കുക!",
+    "edit": "എഡിറ്റ് ചെയ്യുക",
+    "delete": "ഇല്ലാതാക്കുക",
+    "premium": "✨ പ്രീമിയം",
+    "basic": "അടിസ്ഥാനം",
+    "premiumActivated": "✨ പ്രീമിയം സജീവമാക്കി",
+    "premiumActivatedMsg": "ഇപ്പോൾ നിങ്ങൾക്ക് എല്ലാ പ്രീമിയം സവിശേഷതകളിലേക്കും ആക്സസ് ഉണ്ട്!",
+    "basicVersion": "അടിസ്ഥാന പതിപ്പ്",
+    "basicVersionMsg": "നിങ്ങൾ സൗജന്യ അടിസ്ഥാന പതിപ്പ് ഉപയോഗിക്കുന്നു.",
+    "activate": "സജീവമാക്കുക",
+    "active": "സജീവമായ"
+  },
+  "editProfile": {
+    "title": "പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക",
+    "description": "വിവരണം",
+    "descriptionPlaceholder": "ഉദാ. വ്യക്തിഗതം, ബിസിനസ്, ക്ലബ്...",
+    "firstName": "ആദ്യ പേര്",
+    "lastName": "അവസാന പേര്",
+    "company": "കമ്പനി",
+    "jobTitle": "ജോലി തലക്കെട്ട്",
+    "email": "ഇമെയിൽ",
+    "phone": "ഫോൺ",
+    "mobile": "മൊബൈൽ",
+    "fax": "ഫാക്സ്",
+    "street": "തെരുവ്",
+    "zipCode": "പിൻ കോഡ്",
+    "city": "നഗരം",
+    "country": "രാജ്യം",
+    "website": "വെബ്സൈറ്റ്",
+    "notes": "കുറിപ്പുകൾ",
+    "selectPhoto": "ഫോട്ടോ തിരഞ്ഞെടുക്കുക",
+    "save": "സേവ് ചെയ്യുക",
+    "profileSaved": "പ്രൊഫൈൽ സേവ് ചെയ്തു",
+    "invalidImage": "അസാധുവായ ചിത്രം",
+    "linkedin": "LinkedIn",
+    "xing": "XING",
+    "twitter": "Twitter/X",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "whatsapp": "WhatsApp Business",
+    "unsavedChanges": "സേവ് ചെയ്യാത്ത മാറ്റങ്ങൾ",
+    "unsavedChangesMessage": "മാറ്റങ്ങൾ നിരസിക്കണോ?",
+    "discard": "നിരസിക്കുക",
+    "selectColor": "നിറം തിരഞ്ഞെടുക്കുക",
+    "removeColor": "നിറം നീക്കം ചെയ്യുക",
+    "typeWork": "ജോലി",
+    "typeHome": "വീട്",
+    "typeCell": "മൊബൈൽ"
+  },
+  "common": {
+    "ok": "ശരി",
+    "cancel": "റദ്ദാക്കുക",
+    "yes": "അതെ",
+    "no": "ഇല്ല",
+    "close": "അടയ്ക്കുക",
+    "save": "സേവ് ചെയ്യുക",
+    "edit": "എഡിറ്റ് ചെയ്യുക",
+    "delete": "ഇല്ലാതാക്കുക",
+    "success": "വിജയം",
+    "error": "പിശക്"
+  },
+  "language": {
+    "selectLanguage": "ഭാഷ തിരഞ്ഞെടുക്കുക"
+  },
+  "menu": {
+    "impressum": "മുദ്ര",
+    "datenschutz": "സ്വകാര്യതാ നയം",
+    "termsOfUse": "ഉപയോഗ നിബന്ധനകൾ",
+    "description": "വിവരണം",
+    "buyPremium": "✨ പ്രീമിയം വാങ്ങുക"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
+  },
+  "premiumDialog": {
+    "title": "SwapMyContact Pro – Annual Subscription",
+    "description": "The basic version allows only one profile.\\nWith SwapMyContact Pro you can create unlimited profiles.",
+    "subscription": "Subscription:",
+    "priceLoading": "Will be shown in store",
+    "day": "Day",
+    "days": "Days",
+    "week": "Week",
+    "weeks": "Weeks",
+    "month": "Month",
+    "months": "Months",
+    "year": "Year",
+    "years": "Years",
+    "autoRenew": "The subscription automatically renews unless canceled at least 24 hours before the end of the period.",
+    "billingIOS": "Billing is done through your Apple ID account. Subscriptions can be managed and canceled in your Apple ID settings.",
+    "billingAndroid": "Billing is done through your Google Play account. Subscriptions can be managed and canceled in your Google Play account settings.",
+    "cancel": "Cancel",
+    "unlock": "Unlock Now",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "playTerms": "Google Play Terms",
+    "successTitle": "Success",
+    "successMessage": "Premium activated! You can now create unlimited profiles.",
+    "errorTitle": "Error",
+    "errorMessage": "Purchase failed. Please try again later.",
+    "linkError": "Could not open link."
+  }
+}

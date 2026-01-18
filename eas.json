@@ -1,0 +1,38 @@
+{
+  "cli": {
+    "version": ">= 16.28.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": false,
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleRelease",
+        "buildType": "apk"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assemblePlayRelease"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+        "ios": {
+          "image": "macos-14-xcode-16.2"
+        },
+      "android": {
+        "gradleCommand": ":app:bundlePlayRelease"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "6755888866"
+      }
+    }
+  }
+}

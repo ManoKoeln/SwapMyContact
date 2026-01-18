@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 function toVCard(profile) {
-  // Build address string
+  // Build address string with type
   const addressParts = [
     '', // PO Box
     '', // Extended Address
@@ -13,28 +13,55 @@ function toVCard(profile) {
     profile.zipCode || '',
     profile.country || ''
   ];
-  const address = addressParts.some(p => p) ? `ADR;TYPE=WORK:${addressParts.join(';')}` : '';
+  const addressType = profile.addressType || 'WORK';
+  const address = addressParts.some(p => p) ? `ADR;TYPE=${addressType}:${addressParts.join(';')}` : '';
+  
+  // Format social media URLs for better compatibility
+  const formatUrl = (url) => {
+    if (!url) return '';
+    // If already a full URL, return as is
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    // Otherwise assume it's a username/handle and add https://
+    return url;
+  };
+  
+  // Escape special characters in vCard fields
+  const escapeVCard = (text) => {
+    if (!text) return '';
+    return text
+      .replace(/\\/g, '\\\\')  // Escape backslashes first
+      .replace(/\n/g, '\\n')    // Escape newlines
+      .replace(/,/g, '\\,')     // Escape commas
+      .replace(/;/g, '\\;');    // Escape semicolons
+  };
+  
+  // Get types for each field
+  const emailType = profile.emailType || 'WORK';
+  const phoneType = profile.phoneType || 'WORK';
+  const mobileType = profile.mobileType || 'CELL';
+  const faxType = profile.faxType || 'WORK';
+  const websiteType = profile.websiteType || 'WORK';
   
   return [
     'BEGIN:VCARD',
     'VERSION:3.0',
-    `N:${profile.lastName || ''};${profile.firstName || ''}`,
-    `FN:${(profile.firstName || '') + ' ' + (profile.lastName || '')}`,
-    profile.title ? `TITLE:${profile.title}` : '',
-    profile.company ? `ORG:${profile.company}` : '',
-    profile.email ? `EMAIL;TYPE=WORK:${profile.email}` : '',
-    profile.phone ? `TEL;TYPE=WORK,VOICE:${profile.phone}` : '',
-    profile.mobile ? `TEL;TYPE=CELL:${profile.mobile}` : '',
-    profile.fax ? `TEL;TYPE=FAX:${profile.fax}` : '',
-    profile.website ? `URL:${profile.website}` : '',
-    profile.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${profile.linkedin}` : '',
-    profile.xing ? `X-SOCIALPROFILE;TYPE=xing:${profile.xing}` : '',
-    profile.twitter ? `X-SOCIALPROFILE;TYPE=twitter:${profile.twitter}` : '',
-    profile.instagram ? `X-SOCIALPROFILE;TYPE=instagram:${profile.instagram}` : '',
-    profile.facebook ? `X-SOCIALPROFILE;TYPE=facebook:${profile.facebook}` : '',
-    profile.whatsapp ? `X-SOCIALPROFILE;TYPE=whatsapp:${profile.whatsapp}` : '',
+    `N:${escapeVCard(profile.lastName || '')};${escapeVCard(profile.firstName || '')}`,
+    `FN:${escapeVCard((profile.firstName || '') + ' ' + (profile.lastName || ''))}`,
+    profile.title ? `TITLE:${escapeVCard(profile.title)}` : '',
+    profile.company ? `ORG:${escapeVCard(profile.company)}` : '',
+    profile.email ? `EMAIL;TYPE=${emailType}:${profile.email}` : '',
+    profile.phone ? `TEL;TYPE=${phoneType},VOICE:${profile.phone}` : '',
+    profile.mobile ? `TEL;TYPE=${mobileType}:${profile.mobile}` : '',
+    profile.fax ? `TEL;TYPE=${faxType},FAX:${profile.fax}` : '',
+    profile.website ? `URL;TYPE=${websiteType}:${formatUrl(profile.website)}` : '',
+    profile.linkedin ? `URL;type=LinkedIn:${formatUrl(profile.linkedin)}` : '',
+    profile.xing ? `URL;type=XING:${formatUrl(profile.xing)}` : '',
+    profile.twitter ? `URL;type=Twitter:${formatUrl(profile.twitter)}` : '',
+    profile.instagram ? `URL;type=Instagram:${formatUrl(profile.instagram)}` : '',
+    profile.facebook ? `URL;type=Facebook:${formatUrl(profile.facebook)}` : '',
+    profile.whatsapp ? `URL;type=WhatsApp:${formatUrl(profile.whatsapp)}` : '',
     address,
-    profile.notes ? `NOTE:${profile.notes}` : '',
+    profile.notes ? `NOTE:${escapeVCard(profile.notes)}` : '',
     'END:VCARD'
   ].filter(Boolean).join('\n');
 }
@@ -56,7 +83,7 @@ export default function QRGenerator({ profile }) {
           size={240}
         />
       </View>
-      <Text style={{marginTop:8}}>{profile.firstName} {profile.lastName}</Text>
+      <Text style={{marginTop:8, textAlign:'center', paddingHorizontal:16}}>{profile.description || `${profile.firstName || ''} ${profile.lastName || ''}`}</Text>
     </View>
   );
 }

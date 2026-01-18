@@ -3,10 +3,10 @@ import { View, Text, Button, SafeAreaView, TouchableOpacity, StyleSheet } from '
 import QRGenerator from '../components/QRGenerator';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { initDB, getDB } from '../utils/sqlite';
-import { v4 as uuidv4 } from 'uuid';
 import { t, addLanguageListener } from '../utils/i18n';
 
 export default function HomeScreen({ navigation }) {
+  const DISABLE_QR_FOR_DEBUG = false; // set to false after validation
   const [profile, setProfile] = useState({
     firstName: 'Max',
     lastName: 'Mustermann',
@@ -20,19 +20,15 @@ export default function HomeScreen({ navigation }) {
   const [, forceUpdate] = useState(0);
 
   const loadActiveProfile = () => {
-    const db = getDB();
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * FROM profiles WHERE isActive = 1 LIMIT 1',
-        [],
-        (_, { rows }) => {
-          if (rows.length > 0) {
-            setProfile(rows.item(0));
-          }
-        },
-        (_, error) => console.log('Error loading active profile:', error)
-      );
-    });
+    try {
+      const db = getDB();
+      const result = db.getFirstSync('SELECT * FROM profiles WHERE isActive = 1 LIMIT 1');
+      if (result) {
+        setProfile(result);
+      }
+    } catch (error) {
+      console.log('Error loading active profile:', error);
+    }
   };
 
   useLayoutEffect(() => {
@@ -65,26 +61,35 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{flex:1, alignItems:'center', padding:16}}>
-      {profile && profile.firstName ? (
-        <QRGenerator profile={profile} />
-      ) : (
+      {DISABLE_QR_FOR_DEBUG ? (
         <>
-          <Text style={{margin:24, color:'red', fontWeight:'bold'}}>
-            Kein aktives Profil gefunden. Bitte erst ein Profil anlegen!
-          </Text>
-          {console.log('DEBUG: Kein aktives Profil gefunden. Bitte erst ein Profil anlegen!')}
+          <Text style={{marginTop:24}}>Debug-Modus aktiv: QR-Code Rendering vorübergehend deaktiviert.</Text>
+          <Text style={{marginTop:8}}>{profile.firstName} {profile.lastName}</Text>
         </>
+      ) : (
+        profile && profile.firstName ? (
+          <QRGenerator profile={profile} />
+        ) : (
+          <>
+            <Text style={{margin:24, color:'red', fontWeight:'bold'}}>
+              Kein aktives Profil gefunden. Bitte erst ein Profil anlegen!
+            </Text>
+            {console.log('DEBUG: Kein aktives Profil gefunden. Bitte erst ein Profil anlegen!')}
+          </>
+        )
       )}
       <View style={{marginTop:12, width:'100%'}}>
         <TouchableOpacity onPress={()=>navigation.navigate('ProfileList')} style={{backgroundColor:'#111', padding:12, borderRadius:8, alignItems:'center'}}>
           <Text style={{color:'#fff'}}>{t('homeScreen.editProfile')}</Text>
         </TouchableOpacity>
         <View style={{height:12}} />
-        <Button title={t('homeScreen.scanQR')} onPress={()=>navigation.navigate('Scanner')} />
-        <View style={{height:12}} />
-        <Button title={t('homeScreen.scannedCards')} onPress={()=>navigation.navigate('Scans')} />
+          {/* QR-Scan und Scans-Liste entfernt */}
         <View style={{height:20}} />
         <LanguageSwitcher />
+        <View style={{height:12}} />
+        <TouchableOpacity onPress={()=>navigation.navigate('AppQR')} style={{backgroundColor:'transparent', padding:8, borderRadius:0, alignItems:'center'}}>
+          <Text style={{color:'#1E90FF', fontWeight:'bold'}}>{t('homeScreen.appQR')}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

@@ -1,9 +1,10 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "Redigera profil",
     "scanQR": "Skanna QR",
-    "scannedCards": "Skannade kort"
+    "scannedCards": "Skannade kort",
+    "appQR": "SwapMyContact - App"
   },
   "profileList": {
     "title": "Mina profiler",
@@ -59,9 +60,12 @@
     "unsavedChangesMessage": "Vill du kassera ändringarna?",
     "discard": "Kassera",
     "selectColor": "Välj färg",
-    "removeColor": "Ta bort färg"
+    "removeColor": "Ta bort färg",
+    "typeWork": "Arbete",
+    "typeHome": "Hem",
+    "typeCell": "Mobil"
   },
-  "scanner": {
+  "scanQR": {
     "title": "Skanna QR",
     "instruction": "Rikta kameran mot en QR-kod",
     "permissionRequest": "Begär kamerabehörighet...",
@@ -74,7 +78,7 @@
     "limitReachedMsg": "I grundversionen kan maximalt 3 QR-koder sparas. Ta bort gamla skanningar eller uppgradera till Premium för obegränsade skanningar!",
     "success": "Framgång"
   },
-  "scansList": {
+  "scannedList": {
     "title": "Skannade Kort",
     "limitWarning": "⚠️ Gräns nådd: {count}/3 Skanningar (Basic)",
     "limitWarningHint": "💎 Premium: Obegränsade skanningar möjliga!",
@@ -123,5 +127,43 @@
   },
   "language": {
     "selectLanguage": "Välj språk"
+  },
+  "menu": {
+    "impressum": "Impressum",
+    "datenschutz": "Integritetspolicy",
+    "termsOfUse": "Användarvillkor",
+    "description": "Beskrivning",
+    "buyPremium": "✨ Köp Premium"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
+  },
+  "premiumDialog": {
+    "title": "SwapMyContact Pro – Annual Subscription",
+    "description": "The basic version allows only one profile.\\nWith SwapMyContact Pro you can create unlimited profiles.",
+    "subscription": "Subscription:",
+    "priceLoading": "Will be shown in store",
+    "day": "Day",
+    "days": "Days",
+    "week": "Week",
+    "weeks": "Weeks",
+    "month": "Month",
+    "months": "Months",
+    "year": "Year",
+    "years": "Years",
+    "autoRenew": "The subscription automatically renews unless canceled at least 24 hours before the end of the period.",
+    "billingIOS": "Billing is done through your Apple ID account. Subscriptions can be managed and canceled in your Apple ID settings.",
+    "billingAndroid": "Billing is done through your Google Play account. Subscriptions can be managed and canceled in your Google Play account settings.",
+    "cancel": "Cancel",
+    "unlock": "Unlock Now",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "playTerms": "Google Play Terms",
+    "successTitle": "Success",
+    "successMessage": "Premium activated! You can now create unlimited profiles.",
+    "errorTitle": "Error",
+    "errorMessage": "Purchase failed. Please try again later.",
+    "linkError": "Could not open link."
   }
 }

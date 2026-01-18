@@ -1,0 +1,93 @@
+Subject: Unable to Upload Android App Bundle (AAB) to Internal Testing Track - 50+ Failed Attempts
+
+Dear Google Play Console Support Team,
+
+I am experiencing a critical issue with uploading Android App Bundles (AAB) to the Internal Testing track for my app "SwapMyContact" (Package: com.businesscard2025.swapcontactnew).
+
+PROBLEM DESCRIPTION:
+Despite multiple attempts (50+ uploads over several days), I am unable to successfully upload new AAB files to the Internal Testing track. Each upload attempt fails with the following error message:
+
+"You uploaded an APK or Android App Bundle that is signed as debuggable or for testing purposes only."
+
+INVESTIGATION RESULTS:
+I have thoroughly investigated this issue and confirmed that:
+- The AAB manifest contains `android:testOnly="true"` attribute
+- This attribute is NOT present in our source AndroidManifest.xml files
+- The attribute is NOT set in our build.gradle configuration
+- buildTypes.release has `debuggable = false` correctly set
+- We build using `./gradlew bundlePlayRelease` (release variant, not debug)
+
+ROOT CAUSE ANALYSIS:
+After extensive investigation using bundletool and manifest merge reports, we discovered that `android:testOnly="true"` is being automatically injected during the build process, likely by the React Native or Expo build toolchain. This appears to be a known issue with local Android builds in Expo/React Native projects.
+
+ATTEMPTED SOLUTIONS:
+1. Added `tools:remove="android:testOnly"` in AndroidManifest.xml - Did not work
+2. Set `manifestPlaceholders = [testOnly:"false"]` in build.gradle - Did not work
+3. Verified all source manifest files have no testOnly attribute - Confirmed
+4. Used bundletool to inspect merged manifest - Confirmed testOnly=true is present
+5. Performed clean builds multiple times - Issue persists
+6. Checked all gradle.properties settings - No testOnly configuration found
+
+TECHNICAL DETAILS:
+- App Name: SwapMyContact
+- Package Name: com.businesscard2025.swapcontactnew
+- Current Version Code: 53
+- Version Name: 0.2.3
+- Build Type: Android App Bundle (.aab)
+- Target SDK: 35 (Android 15)
+- Build Tools: Gradle 8.10.2, AGP 8.6.0
+- Framework: React Native (Expo SDK 52)
+
+AAB CONFIGURATION:
+- 16KB page size support: Implemented (LDFLAGS -Wl,-z,max-page-size=16384)
+- Signing: Properly signed with upload key
+- File size: Approximately 60-80 MB
+- Bundle validation: No errors reported by bundletool
+
+ATTEMPTS MADE:
+1. Multiple uploads via Google Play Console web interface
+2. Verified AAB integrity using bundletool (version 1.17.2)
+3. Checked signing configuration and keystore
+4. Ensured version codes are incrementing correctly
+5. Verified all required permissions and manifest entries
+6. Confirmed 16KB page size support for Android 15+
+7. Attempted uploads at different times/days
+8. Verified build.gradle uses 'release' build type (debuggable = false)
+9. Confirmed AndroidManifest.xml has no android:debuggable="true" attribute
+10. Checked that android:testOnly is not set to true
+11. Built using ./gradlew bundlePlayRelease (not debug variant)
+12. Inspected AAB manifest using bundletool - no debuggable flag found
+
+CURRENT STATUS:
+- Production track: Last successful upload was version 52
+- Internal Testing track: Cannot upload any new versions
+- No specific error messages provided during upload process
+- Upload appears to process but eventually fails or is rejected
+
+IMPACT:
+This issue is blocking our development workflow and preventing us from testing new features (including internationalization improvements and UI enhancements) before production release.
+
+REQUESTED ASSISTANCE:
+1. Please confirm if AABs with `android:testOnly="true"` can NEVER be uploaded to ANY track (including Internal Testing)
+2. Provide guidance on how to remove this attribute when it's being injected by the build toolchain
+3. Clarify if using EAS Build (Expo Application Services) instead of local gradle builds would resolve this issue
+4. Confirm whether this is expected behavior or if there's a workaround for React Native/Expo projects
+5. Suggest alternative approaches to test new builds if Internal Testing track uploads are blocked
+
+ADDITIONAL INFORMATION:
+- Previous uploads to Production track were successful
+- Issue started occurring after multiple consecutive upload attempts
+- No changes to developer account or app permissions
+- Bundle format validated successfully with bundletool
+
+I would greatly appreciate your urgent assistance in resolving this issue so we can continue delivering updates to our users.
+
+Thank you for your time and support.
+
+Best regards,
+[Your Name]
+[Your Developer Email]
+[Your Developer Account ID]
+
+---
+Generated: 7. Januar 2026

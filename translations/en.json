@@ -1,9 +1,14 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "Edit Profile",
+    "appQR": "SwapMyContact - App",
     "scanQR": "Scan QR",
     "scannedCards": "Scanned Cards"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
   },
   "profileList": {
     "title": "My Profiles",
@@ -18,6 +23,7 @@
     "createFirst": "Create your first profile!",
     "edit": "Edit",
     "delete": "Delete",
+    "copy": "Copy",
     "premium": "✨ Premium",
     "basic": "Basic",
     "premiumActivated": "✨ Premium activated",
@@ -59,55 +65,10 @@
     "unsavedChangesMessage": "Do you want to discard the changes?",
     "discard": "Discard",
     "selectColor": "Select Color",
-    "removeColor": "Remove Color"
-  },
-  "scanner": {
-    "title": "Scan QR",
-    "instruction": "Point the camera at a QR code",
-    "permissionRequest": "Requesting camera permission...",
-    "noPermission": "No access to camera.",
-    "noPermissionDetail": "Please grant permission in settings.",
-    "scanned": "QR code scanned!",
-    "saved": "Scan saved",
-    "error": "Error saving",
-    "limitReached": "Premium Feature",
-    "limitReachedMsg": "In the basic version, a maximum of 3 QR codes can be saved. Delete old scans or upgrade to Premium for unlimited scans!",
-    "success": "Success"
-  },
-  "scansList": {
-    "title": "Scanned Cards",
-    "limitWarning": "⚠️ Limit reached: {count}/3 Scans (Basic)",
-    "limitWarningHint": "💎 Premium: Unlimited scans possible!",
-    "counter": "{count}/3 Scans saved (Basic)",
-    "noScans": "No QR codes scanned yet.",
-    "scanFirst": "Scan business cards with the camera!",
-    "basicLimit": "(Basic: Max. 3 Scans)",
-    "deleteTitle": "Delete Scan",
-    "deleteMessage": "Do you really want to delete \"{name}\"?",
-    "toContacts": "To Contacts",
-    "delete": "Delete",
-    "permissionRequired": "Permission Required",
-    "contactsPermission": "Contacts permission needed",
-    "contactCreated": "Contact created",
-    "contactError": "Could not create contact",
-    "scannedCard": "Scanned Card",
-    "unknownContact": "Unknown Contact",
-    "contactDetails": "Contact Details",
-    "company": "Company",
-    "jobTitle": "Job Title",
-    "email": "Email",
-    "phone": "Phone",
-    "website": "Website",
-    "address": "Address",
-    "notes": "Notes",
-    "notesPlaceholder": "Add notes...",
-    "saveNotes": "Save Notes",
-    "linkedin": "LinkedIn",
-    "xing": "XING",
-    "twitter": "Twitter/X",
-    "instagram": "Instagram",
-    "facebook": "Facebook",
-    "whatsapp": "WhatsApp Business"
+    "removeColor": "Remove Color",
+    "typeWork": "Work",
+    "typeHome": "Home",
+    "typeCell": "Mobile"
   },
   "common": {
     "ok": "OK",
@@ -123,5 +84,39 @@
   },
   "language": {
     "selectLanguage": "Select Language"
+  },
+  "menu": {
+    "impressum": "Imprint",
+    "datenschutz": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "description": "Description",
+    "buyPremium": "✨ Buy Premium"
+  },
+  "premiumDialog": {
+    "title": "Unlock Premium",
+    "description": "In the basic version, only one profile can be created.\nWith SwapMyContact Premium, you can create unlimited profiles.",
+    "subscription": "Subscription:",
+    "priceLoading": "Loading...",
+    "autoRenew": "Subscription automatically renews unless cancelled at least 24 hours before expiry.",
+    "billingIOS": "Billing is through your Apple ID account. Subscriptions can be managed and cancelled in your Apple ID settings.",
+    "billingAndroid": "Billing is through your Google Play account. Subscriptions can be managed and cancelled in your Google Play settings.",
+    "cancel": "Cancel",
+    "unlock": "Unlock Now",
+    "successTitle": "Success!",
+    "successMessage": "Premium has been successfully activated. Thank you for your support!",
+    "errorTitle": "Error",
+    "errorMessage": "An error occurred during purchase. Please try again later.",
+    "linkError": "Could not open link.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "playTerms": "Play Store Terms",
+    "day": "Day",
+    "days": "Days",
+    "week": "Week",
+    "weeks": "Weeks",
+    "month": "Month",
+    "months": "Months",
+    "year": "Year",
+    "years": "Years"
   }
 }

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0EA5E9" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)" />
+  <g fill="#FFFFFF">
+    <text x="512" y="220" font-family="-apple-system, Helvetica, Arial" font-size="72" text-anchor="middle" font-weight="700">SwapMyContact</text>
+    <text x="512" y="320" font-family="-apple-system, Helvetica, Arial" font-size="56" text-anchor="middle" font-weight="600">Premium</text>
+    <text x="512" y="400" font-family="-apple-system, Helvetica, Arial" font-size="36" text-anchor="middle">Unbegrenzte Profile</text>
+    <text x="512" y="450" font-family="-apple-system, Helvetica, Arial" font-size="36" text-anchor="middle">Alle Premium‑Funktionen</text>
+  </g>
+  <g transform="translate(0,120)">
+    <circle cx="256" cy="640" r="90" fill="#22C55E" />
+    <text x="256" y="648" font-family="-apple-system, Helvetica, Arial" font-size="44" text-anchor="middle" fill="#FFFFFF" font-weight="700">∞</text>
+
+    <circle cx="512" cy="640" r="90" fill="#F59E0B" />
+    <text x="512" y="648" font-family="-apple-system, Helvetica, Arial" font-size="34" text-anchor="middle" fill="#FFFFFF" font-weight="700">QR</text>
+
+    <circle cx="768" cy="640" r="90" fill="#3B82F6" />
+    <text x="768" y="648" font-family="-apple-system, Helvetica, Arial" font-size="34" text-anchor="middle" fill="#FFFFFF" font-weight="700">Sync</text>
+  </g>
+  <rect x="212" y="800" width="600" height="90" rx="16" fill="#111827" />
+  <text x="512" y="858" font-family="-apple-system, Helvetica, Arial" font-size="34" text-anchor="middle" fill="#FFFFFF">Jetzt upgraden – alle Features freischalten</text>
+</svg>

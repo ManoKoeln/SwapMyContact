@@ -1,9 +1,10 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "प्रोफ़ाइल संपादित करें",
     "scanQR": "QR स्कैन करें",
-    "scannedCards": "स्कैन किए गए कार्ड"
+    "scannedCards": "स्कैन किए गए कार्ड",
+    "appQR": "SwapMyContact - App"
   },
   "profileList": {
     "title": "मेरी प्रोफाइल",
@@ -59,7 +60,10 @@
     "unsavedChangesMessage": "क्या आप परिवर्तनों को हटाना चाहते हैं?",
     "discard": "हटाएं",
     "selectColor": "रंग चुनें",
-    "removeColor": "रंग हटाएं"
+    "removeColor": "रंग हटाएं",
+    "typeWork": "कार्य",
+    "typeHome": "घर",
+    "typeCell": "मोबाइल"
   },
   "scanner": {
     "title": "QR स्कैन करें",
@@ -123,5 +127,43 @@
   },
   "language": {
     "selectLanguage": "भाषा चुनें"
+  },
+  "menu": {
+    "impressum": "छाप",
+    "datenschutz": "गोपनीयता नीति",
+    "termsOfUse": "उपयोग की शर्तें",
+    "description": "विवरण",
+    "buyPremium": "✨ प्रीमियम खरीदें"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
+  },
+  "premiumDialog": {
+    "title": "SwapMyContact Pro – Annual Subscription",
+    "description": "The basic version allows only one profile.\\nWith SwapMyContact Pro you can create unlimited profiles.",
+    "subscription": "Subscription:",
+    "priceLoading": "Will be shown in store",
+    "day": "Day",
+    "days": "Days",
+    "week": "Week",
+    "weeks": "Weeks",
+    "month": "Month",
+    "months": "Months",
+    "year": "Year",
+    "years": "Years",
+    "autoRenew": "The subscription automatically renews unless canceled at least 24 hours before the end of the period.",
+    "billingIOS": "Billing is done through your Apple ID account. Subscriptions can be managed and canceled in your Apple ID settings.",
+    "billingAndroid": "Billing is done through your Google Play account. Subscriptions can be managed and canceled in your Google Play account settings.",
+    "cancel": "Cancel",
+    "unlock": "Unlock Now",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "playTerms": "Google Play Terms",
+    "successTitle": "Success",
+    "successMessage": "Premium activated! You can now create unlimited profiles.",
+    "errorTitle": "Error",
+    "errorMessage": "Purchase failed. Please try again later.",
+    "linkError": "Could not open link."
   }
 }

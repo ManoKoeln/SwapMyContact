@@ -1,0 +1,56 @@
+- Android:
+
+✅ bildschirmhöhe für Impressum und Datenschutzerklärung zu kurz. beim Impressum wird er Button "Datenschutz" nur zur Hälfte sichtbar und beim Impressum. sieht mal die letzte ZEILE nicht (FIXED: paddingBottom: 100 hinzugefügt)
+
+- iOS
+
+
+- Android + iOS
+
+✅ nach kauf muss die Meldung kommen: "Kauf erfolgreich"
+✅ Rückkehr zur Profilübersicht und aktualisierung der Premium - Ansicht
+✅ wenn das Premium - Abo aktiv ist, dann soll der Menüpunkt "Premium kaufen" nicht angezeigt werden
+
+Das Problem liegt jetzt definitiv in der Google Play Console. Mögliche Ursachen:
+
+Du lädst in den falschen Track hoch (Testing statt Production)
+Die App ist als Test-App konfiguriert
+Alte Test-Versionen blockieren
+Prüfe Folgendes in Google Play Console:
+
+Gehe zu "Release" → "Production" (NICHT "Testing")
+Klicke "Create new release"
+Lade das AAB dort hoch
+Wenn es immer noch abgelehnt wird:
+Gehe zu "Testing" → "Internal testing"
+Lösche ALLE Releases dort komplett
+Gehe zu "Testing" → "Closed testing"
+Lösche ALLE Releases dort auch
+Dann erneut in Production hochladen
+Alternativ: Ist die App vielleicht im "Draft"-Status? Prüfe den App-Status oben rechts in der Console.
+
+✅ Notes-Feld - Multiline-Eingabe mit dynamischer Höhe (min 44px, max 150px)
+✅ Type-Dropdowns für:
+Email (Arbeit/Privat)
+Telefon (Arbeit/Privat)
+Mobiltelefon (Mobil)
+Fax (Arbeit/Privat)
+Adresse (Arbeit/Privat)
+Website (Arbeit/Privat)
+✅ Übersetzungen in allen 52 Sprachen
+✅ android:testOnly Problem gelöst - Upload erfolgreich!
+
+⏰ 16KB Page Size Support - Deadline: 31. Mai 2026
+- Expo SDK 53 + React Native 0.77 warten (Q1-Q2 2026)
+- Siehe: docs/16KB_ROADMAP.md für detaillierten Zeitplan
+- Nächster Meilenstein: Februar 2026 (Expo SDK 53 Beta Testing)
+Die App wird in ca. 1-2 Minuten auf dem Emulator starten. Du kannst dann:
+
+Ein Profil erstellen/bearbeiten
+Das neue Notes-Feld testen
+Die Type-Dropdowns ausprobieren (blaue Links mit Chevron)
+Einen QR-Code generieren und prüfen, ob die vCard korrekt exportiert wird
+
+https://developer.android.com/guide/practices/page-sizes?hl=de#build
+
+Die Warnung verschwindet erst, wenn React Native selbst 16KB Support implementiert (vermutlich in 0.77+)

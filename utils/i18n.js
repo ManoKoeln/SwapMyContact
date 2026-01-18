@@ -1,4 +1,5 @@
 import { getDB } from './sqlite';
+import { Platform, NativeModules } from 'react-native';
 
 // Import all translations
 const translations = {
@@ -18,6 +19,42 @@ const translations = {
   pl: require('../translations/pl.json'),
   nl: require('../translations/nl.json'),
   sv: require('../translations/sv.json'),
+  da: require('../translations/da.json'),
+  fi: require('../translations/fi.json'),
+  no: require('../translations/no.json'),
+  cs: require('../translations/cs.json'),
+  el: require('../translations/el.json'),
+  he: require('../translations/he.json'),
+  id: require('../translations/id.json'),
+  ms: require('../translations/ms.json'),
+  th: require('../translations/th.json'),
+  vi: require('../translations/vi.json'),
+  uk: require('../translations/uk.json'),
+  ro: require('../translations/ro.json'),
+  hu: require('../translations/hu.json'),
+  sk: require('../translations/sk.json'),
+  bg: require('../translations/bg.json'),
+  hr: require('../translations/hr.json'),
+  sr: require('../translations/sr.json'),
+  sl: require('../translations/sl.json'),
+  et: require('../translations/et.json'),
+  lv: require('../translations/lv.json'),
+  lt: require('../translations/lt.json'),
+  fa: require('../translations/fa.json'),
+  bn: require('../translations/bn.json'),
+  ta: require('../translations/ta.json'),
+  te: require('../translations/te.json'),
+  mr: require('../translations/mr.json'),
+  ur: require('../translations/ur.json'),
+  kn: require('../translations/kn.json'),
+  ml: require('../translations/ml.json'),
+  gu: require('../translations/gu.json'),
+  pa: require('../translations/pa.json'),
+  af: require('../translations/af.json'),
+  sw: require('../translations/sw.json'),
+  ca: require('../translations/ca.json'),
+  eu: require('../translations/eu.json'),
+  gl: require('../translations/gl.json'),
 };
 
 const languageNames = {
@@ -37,16 +74,54 @@ const languageNames = {
   pl: 'Polski',
   nl: 'Nederlands',
   sv: 'Svenska',
+  da: 'Dansk',
+  fi: 'Suomi',
+  no: 'Norsk',
+  cs: 'Čeština',
+  el: 'Ελληνικά',
+  he: 'עברית',
+  id: 'Bahasa Indonesia',
+  ms: 'Bahasa Melayu',
+  th: 'ไทย',
+  vi: 'Tiếng Việt',
+  uk: 'Українська',
+  ro: 'Română',
+  hu: 'Magyar',
+  sk: 'Slovenčina',
+  bg: 'Български',
+  hr: 'Hrvatski',
+  sr: 'Српски',
+  sl: 'Slovenščina',
+  et: 'Eesti',
+  lv: 'Latviešu',
+  lt: 'Lietuvių',
+  fa: 'فارسی',
+  bn: 'বাংলা',
+  ta: 'தமிழ்',
+  te: 'తెలుగు',
+  mr: 'मराठी',
+  ur: 'اردو',
+  kn: 'ಕನ್ನಡ',
+  ml: 'മലയാളം',
+  gu: 'ગુજરાતી',
+  pa: 'ਪੰਜਾਬੀ',
+  af: 'Afrikaans',
+  sw: 'Kiswahili',
+  ca: 'Català',
+  eu: 'Euskara',
+  gl: 'Galego',
 };
 
 let currentLanguage = 'de';
 let listeners = [];
 
 export const getLanguages = () => {
-  return Object.keys(translations).map(code => ({
-    code,
-    name: languageNames[code] || code.toUpperCase(),
-  }));
+  return Object.keys(translations)
+    .map(code => ({
+      code,
+      name: languageNames[code] || code.toUpperCase(),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 };
 
 export const getCurrentLanguage = () => currentLanguage;
@@ -56,17 +131,13 @@ export const setLanguage = (langCode) => {
     currentLanguage = langCode;
     
     // Save to database
-    const db = getDB();
-    db.transaction(tx => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)',
-        []
-      );
-      tx.executeSql(
-        'INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)',
-        ['language', langCode]
-      );
-    });
+    try {
+      const db = getDB();
+      db.execSync('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)');
+      db.runSync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', ['language', langCode]);
+    } catch (error) {
+      console.log('Error saving language:', error);
+    }
     
     // Notify listeners
     listeners.forEach(listener => listener(langCode));
@@ -74,23 +145,49 @@ export const setLanguage = (langCode) => {
 };
 
 export const loadLanguage = (callback) => {
-  const db = getDB();
-  db.transaction(tx => {
-    tx.executeSql(
-      'CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)',
-      []
-    );
-    tx.executeSql(
-      'SELECT value FROM settings WHERE key = ?',
-      ['language'],
-      (_, { rows }) => {
-        if (rows.length > 0) {
-          currentLanguage = rows.item(0).value;
+  try {
+    const db = getDB();
+    db.execSync('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)');
+    const result = db.getFirstSync('SELECT value FROM settings WHERE key = ?', ['language']);
+    
+    if (result && result.value) {
+      // User has already selected a language - use it
+      currentLanguage = result.value;
+    } else {
+      // No saved preference - detect device language
+      try {
+        let deviceLocale = 'de'; // Default fallback
+        
+        if (Platform.OS === 'ios') {
+          const localeString = NativeModules.SettingsManager?.settings?.AppleLocale || 
+                               NativeModules.SettingsManager?.settings?.AppleLanguages?.[0];
+          if (localeString) {
+            // Extract language code (e.g., "de_DE" -> "de", "en-US" -> "en")
+            deviceLocale = localeString.split(/[-_]/)[0];
+          }
+        } else if (Platform.OS === 'android') {
+          const localeString = NativeModules.I18nManager?.localeIdentifier;
+          if (localeString) {
+            deviceLocale = localeString.split(/[-_]/)[0];
+          }
         }
-        if (callback) callback(currentLanguage);
+        
+        // Check if this language is available in our translations
+        if (translations[deviceLocale]) {
+          currentLanguage = deviceLocale;
+          // Save it so we don't auto-detect again
+          db.runSync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', ['language', deviceLocale]);
+        }
+      } catch (localeError) {
+        console.log('Could not detect device locale:', localeError);
       }
-    );
-  });
+    }
+    
+    if (callback) callback(currentLanguage);
+  } catch (error) {
+    console.log('Error loading language:', error);
+    if (callback) callback(currentLanguage);
+  }
 };
 
 export const addLanguageListener = (listener) => {

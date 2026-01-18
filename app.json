@@ -1,13 +1,90 @@
 {
-  "android": {
-    "package": "com.businesscard2025.swapcontactnew"
-  },
-  "ios": {
-    "bundleIdentifier": "com.businesscard2025.swapcontactnew"
-  },
-  "extra": {
-    "eas": {
-      "projectId": "a744c033-7f7d-4fea-ba2b-7adb8fc59952"
-    }
+  "expo": {
+    "newArchEnabled": true,
+    "name": "SwapMyContact",
+    "slug": "swapcontactnew",
+    "version": "0.2.4",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.businesscard2025.swapcontactnew",
+      "buildNumber": "57",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "LSApplicationQueriesSchemes": [
+          "linkedin",
+          "xing",
+          "whatsapp-business"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.businesscard2025.swapcontactnew",
+      "versionCode": 57,
+      "permissions": [
+        "INTERNET",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "newArchEnabled": false,
+            "flipper": false
+          },
+          "android": {
+            "newArchEnabled": false,
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0",
+            "minSdkVersion": 24,
+            "packagingOptions": {
+              "jniLibs": {
+                "useLegacyPackaging": false
+              }
+            },
+            "abiFilters": ["arm64-v8a", "armeabi-v7a"],
+            "ndkVersion": "27.0.12077973",
+            "cFlags": "-Wl,-z,max-page-size=16384",
+            "ldFlags": "-Wl,-z,max-page-size=16384"
+          }
+        }
+      ],
+      "expo-asset",
+      "expo-sqlite"
+    ],
+    "jsEngine": "hermes",
+    "extra": {
+      "eas": {
+        "projectId": "a744c033-7f7d-4fea-ba2b-7adb8fc59952"
+      }
+    },
+    "owner": "businesscard2025"
   }
 }

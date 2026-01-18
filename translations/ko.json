@@ -1,9 +1,10 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "프로필 편집",
     "scanQR": "QR 스캔",
-    "scannedCards": "스캔한 카드"
+    "scannedCards": "스캔한 카드",
+    "appQR": "SwapMyContact - App"
   },
   "profileList": {
     "title": "내 프로필",
@@ -59,7 +60,10 @@
     "unsavedChangesMessage": "변경 사항을 폐기하시겠습니까?",
     "discard": "폐기",
     "selectColor": "색상 선택",
-    "removeColor": "색상 제거"
+    "removeColor": "색상 제거",
+    "typeWork": "직장",
+    "typeHome": "집",
+    "typeCell": "휴대전화"
   },
   "scanner": {
     "title": "QR 스캔",
@@ -123,5 +127,43 @@
   },
   "language": {
     "selectLanguage": "언어 선택"
+  },
+  "menu": {
+    "impressum": "임프린트",
+    "datenschutz": "개인정보 보호정책",
+    "termsOfUse": "이용 약관",
+    "description": "설명",
+    "buyPremium": "✨ 프리미엄 구매"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
+  },
+  "premiumDialog": {
+    "title": "SwapMyContact Pro – Annual Subscription",
+    "description": "The basic version allows only one profile.\\nWith SwapMyContact Pro you can create unlimited profiles.",
+    "subscription": "Subscription:",
+    "priceLoading": "Will be shown in store",
+    "day": "Day",
+    "days": "Days",
+    "week": "Week",
+    "weeks": "Weeks",
+    "month": "Month",
+    "months": "Months",
+    "year": "Year",
+    "years": "Years",
+    "autoRenew": "The subscription automatically renews unless canceled at least 24 hours before the end of the period.",
+    "billingIOS": "Billing is done through your Apple ID account. Subscriptions can be managed and canceled in your Apple ID settings.",
+    "billingAndroid": "Billing is done through your Google Play account. Subscriptions can be managed and canceled in your Google Play account settings.",
+    "cancel": "Cancel",
+    "unlock": "Unlock Now",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "playTerms": "Google Play Terms",
+    "successTitle": "Success",
+    "successMessage": "Premium activated! You can now create unlimited profiles.",
+    "errorTitle": "Error",
+    "errorMessage": "Purchase failed. Please try again later.",
+    "linkError": "Could not open link."
   }
 }

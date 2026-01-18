@@ -3,3 +3,6 @@ node_modules
 android/
 ios/
 .expo/
+node_modules
+*.apk
+*.aab

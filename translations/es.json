@@ -1,9 +1,10 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "Editar Perfil",
-    "scanQR": "Escanear QR",
-    "scannedCards": "Tarjetas Escaneadas"
+    "appQR": "SwapMyContact - App",
+    "scanQR": "Scan QR",
+    "scannedCards": "Scanned Cards"
   },
   "profileList": {
     "title": "Mis Perfiles",
@@ -59,55 +60,10 @@
     "unsavedChangesMessage": "¿Quieres descartar los cambios?",
     "discard": "Descartar",
     "selectColor": "Seleccionar color",
-    "removeColor": "Eliminar color"
-  },
-  "scanner": {
-    "title": "Escanear QR",
-    "instruction": "Apunta la cámara a un código QR",
-    "permissionRequest": "Solicitando permiso de cámara...",
-    "noPermission": "Sin acceso a la cámara.",
-    "noPermissionDetail": "Por favor concede el permiso en la configuración.",
-    "scanned": "¡Código QR escaneado!",
-    "saved": "Escaneo guardado",
-    "error": "Error al guardar",
-    "limitReached": "Función Premium",
-    "limitReachedMsg": "En la versión básica, se pueden guardar un máximo de 3 códigos QR. ¡Elimina escaneos antiguos o actualiza a Premium para escaneos ilimitados!",
-    "success": "Éxito"
-  },
-  "scansList": {
-    "title": "Tarjetas Escaneadas",
-    "limitWarning": "⚠️ Límite alcanzado: {count}/3 Escaneos (Básico)",
-    "limitWarningHint": "💎 Premium: ¡Escaneos ilimitados posibles!",
-    "counter": "{count}/3 Escaneos guardados (Básico)",
-    "noScans": "Aún no hay códigos QR escaneados.",
-    "scanFirst": "¡Escanea tarjetas de visita con la cámara!",
-    "basicLimit": "(Básico: Máx. 3 Escaneos)",
-    "deleteTitle": "Eliminar escaneo",
-    "deleteMessage": "¿Realmente quieres eliminar \"{name}\"?",
-    "toContacts": "A Contactos",
-    "delete": "Eliminar",
-    "permissionRequired": "Permiso Requerido",
-    "contactsPermission": "Se necesita permiso de contactos",
-    "contactCreated": "Contacto creado",
-    "contactError": "No se pudo crear el contacto",
-    "scannedCard": "Tarjeta Escaneada",
-    "unknownContact": "Contacto Desconocido",
-    "contactDetails": "Detalles de Contacto",
-    "company": "Empresa",
-    "email": "Correo electrónico",
-    "phone": "Teléfono",
-    "website": "Sitio web",
-    "address": "Dirección",
-    "notes": "Notas",
-    "notesPlaceholder": "Añadir notas...",
-    "saveNotes": "Guardar Notas",
-    "jobTitle": "Cargo",
-    "linkedin": "LinkedIn",
-    "xing": "XING",
-    "twitter": "Twitter/X",
-    "instagram": "Instagram",
-    "facebook": "Facebook",
-    "whatsapp": "WhatsApp Business"
+    "removeColor": "Eliminar color",
+    "typeWork": "Trabajo",
+    "typeHome": "Casa",
+    "typeCell": "Móvil"
   },
   "common": {
     "ok": "OK",
@@ -123,5 +79,43 @@
   },
   "language": {
     "selectLanguage": "Seleccionar Idioma"
+  },
+  "menu": {
+    "impressum": "Aviso legal",
+    "datenschutz": "Política de privacidad",
+    "termsOfUse": "Condiciones de uso",
+    "description": "Descripción",
+    "buyPremium": "✨ Comprar Premium"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
+  },
+  "premiumDialog": {
+    "title": "SwapMyContact Pro – Suscripción anual",
+    "description": "La versión básica solo permite un perfil.\\nCon SwapMyContact Pro puedes crear perfiles ilimitados.",
+    "subscription": "Suscripción:",
+    "priceLoading": "Se mostrará en la tienda",
+    "day": "Día",
+    "days": "Días",
+    "week": "Semana",
+    "weeks": "Semanas",
+    "month": "Mes",
+    "months": "Meses",
+    "year": "Año",
+    "years": "Años",
+    "autoRenew": "La suscripción se renueva automáticamente a menos que se cancele al menos 24 horas antes del final del período.",
+    "billingIOS": "La facturación se realiza a través de tu cuenta de Apple ID. Las suscripciones se pueden administrar y cancelar en la configuración de Apple ID.",
+    "billingAndroid": "La facturación se realiza a través de tu cuenta de Google Play. Las suscripciones se pueden administrar y cancelar en la configuración de la cuenta de Google Play.",
+    "cancel": "Cancelar",
+    "unlock": "Desbloquear ahora",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfService": "Términos de servicio",
+    "playTerms": "Términos de Google Play",
+    "successTitle": "Éxito",
+    "successMessage": "¡Premium activado! Ahora puedes crear perfiles ilimitados.",
+    "errorTitle": "Error",
+    "errorMessage": "La compra falló. Por favor, inténtalo de nuevo más tarde.",
+    "linkError": "No se pudo abrir el enlace."
   }
 }

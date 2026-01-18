@@ -1,9 +1,14 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "Profil bearbeiten",
+    "appQR": "SwapMyContact - App",
     "scanQR": "QR scannen",
     "scannedCards": "Gescannte Karten"
+  },
+  "appQR": {
+    "title": "App herunterladen",
+    "downloadText": "SwapMyContact - App herunterladen"
   },
   "profileList": {
     "title": "Meine Profile",
@@ -18,6 +23,7 @@
     "createFirst": "Legen Sie Ihr erstes Profil an!",
     "edit": "Bearbeiten",
     "delete": "Löschen",
+    "copy": "Kopieren",
     "premium": "✨ Premium",
     "basic": "Basis",
     "premiumActivated": "✨ Premium aktiviert",
@@ -59,55 +65,10 @@
     "unsavedChangesMessage": "Möchten Sie die Änderungen verwerfen?",
     "discard": "Verwerfen",
     "selectColor": "Farbe wählen",
-    "removeColor": "Farbe entfernen"
-  },
-  "scanner": {
-    "title": "QR scannen",
-    "instruction": "Richten Sie die Kamera auf einen QR-Code",
-    "permissionRequest": "Kamera-Berechtigung wird angefragt...",
-    "noPermission": "Kein Zugriff auf die Kamera.",
-    "noPermissionDetail": "Bitte Berechtigung in den Einstellungen erteilen.",
-    "scanned": "QR-Code gescannt!",
-    "saved": "Scan wurde gespeichert",
-    "error": "Fehler beim Speichern",
-    "limitReached": "Premium Feature",
-    "limitReachedMsg": "In der Basisversion können maximal 3 QR-Codes gespeichert werden. Löschen Sie alte Scans oder upgraden Sie auf Premium für unbegrenzte Scans!",
-    "success": "Erfolg"
-  },
-  "scansList": {
-    "title": "Gescannte Karten",
-    "limitWarning": "⚠️ Limit erreicht: {count}/3 Scans (Basis)",
-    "limitWarningHint": "💎 Premium: Unbegrenzte Scans möglich!",
-    "counter": "{count}/3 Scans gespeichert (Basis)",
-    "noScans": "Noch keine QR-Codes gescannt.",
-    "scanFirst": "Scannen Sie Visitenkarten mit der Kamera!",
-    "basicLimit": "(Basis: Max. 3 Scans)",
-    "deleteTitle": "Scan löschen",
-    "deleteMessage": "Möchten Sie \"{name}\" wirklich löschen?",
-    "toContacts": "Zu Kontakten",
-    "delete": "Löschen",
-    "permissionRequired": "Berechtigung erforderlich",
-    "contactsPermission": "Kontakte Berechtigung benötigt",
-    "contactCreated": "Kontakt wurde erstellt",
-    "contactError": "Kontakt konnte nicht erstellt werden",
-    "scannedCard": "Gescannte Karte",
-    "unknownContact": "Unbekannter Kontakt",
-    "contactDetails": "Kontakt Details",
-    "company": "Firma",
-    "jobTitle": "Funktion",
-    "email": "E-Mail",
-    "phone": "Telefon",
-    "website": "Website",
-    "address": "Adresse",
-    "notes": "Notizen",
-    "notesPlaceholder": "Notizen hinzufügen...",
-    "saveNotes": "Notizen speichern",
-    "linkedin": "LinkedIn",
-    "xing": "XING",
-    "twitter": "Twitter/X",
-    "instagram": "Instagram",
-    "facebook": "Facebook",
-    "whatsapp": "WhatsApp Business"
+    "removeColor": "Farbe entfernen",
+    "typeWork": "Arbeit",
+    "typeHome": "Privat",
+    "typeCell": "Mobil"
   },
   "common": {
     "ok": "OK",
@@ -123,5 +84,39 @@
   },
   "language": {
     "selectLanguage": "Sprache wählen"
+  },
+  "menu": {
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "termsOfUse": "Nutzungsbedingungen",
+    "description": "Beschreibung",
+    "buyPremium": "✨ Premium kaufen"
+  },
+  "premiumDialog": {
+    "title": "Premium freischalten",
+    "description": "In der Basisversion kann nur ein Profil angelegt werden.\nMit SwapMyContact Premium können unbegrenzt viele Profile erstellt werden.",
+    "subscription": "Abonnement:",
+    "priceLoading": "Laden...",
+    "autoRenew": "Das Abonnement verlängert sich automatisch, sofern es nicht mindestens 24 Stunden vor Ablauf gekündigt wird.",
+    "billingIOS": "Die Abrechnung erfolgt über dein Apple-ID-Konto. Abonnements können in den Einstellungen deiner Apple-ID verwaltet und gekündigt werden.",
+    "billingAndroid": "Die Abrechnung erfolgt über dein Google Play-Konto. Abonnements können in den Einstellungen deines Google Play-Kontos verwaltet und gekündigt werden.",
+    "cancel": "Abbrechen",
+    "unlock": "Jetzt freischalten",
+    "successTitle": "Erfolg!",
+    "successMessage": "Premium wurde erfolgreich aktiviert. Vielen Dank für Ihre Unterstützung!",
+    "errorTitle": "Fehler",
+    "errorMessage": "Beim Kauf ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+    "linkError": "Link konnte nicht geöffnet werden.",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "playTerms": "Play Store Bedingungen",
+    "day": "Tag",
+    "days": "Tage",
+    "week": "Woche",
+    "weeks": "Wochen",
+    "month": "Monat",
+    "months": "Monate",
+    "year": "Jahr",
+    "years": "Jahre"
   }
 }

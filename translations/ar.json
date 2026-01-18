@@ -1,9 +1,10 @@
 {
   "homeScreen": {
-    "title": "SwapContact",
+    "title": "SwapMyContact",
     "editProfile": "تحرير الملف الشخصي",
     "scanQR": "مسح رمز الاستجابة السريعة",
-    "scannedCards": "البطاقات الممسوحة"
+    "scannedCards": "البطاقات الممسوحة",
+    "appQR": "SwapMyContact - App"
   },
   "profileList": {
     "title": "ملفاتي الشخصية",
@@ -59,7 +60,10 @@
     "unsavedChangesMessage": "هل تريد تجاهل التغييرات؟",
     "discard": "تجاهل",
     "selectColor": "اختر اللون",
-    "removeColor": "إزالة اللون"
+    "removeColor": "إزالة اللون",
+    "typeWork": "عمل",
+    "typeHome": "منزل",
+    "typeCell": "جوال"
   },
   "scanner": {
     "title": "مسح رمز الاستجابة السريعة",
@@ -123,5 +127,43 @@
   },
   "language": {
     "selectLanguage": "اختر اللغة"
+  },
+  "menu": {
+    "impressum": "بصمة",
+    "datenschutz": "سياسة الخصوصية",
+    "termsOfUse": "شروط الاستخدام",
+    "description": "وصف",
+    "buyPremium": "✨ شراء بريميوم"
+  },
+  "appQR": {
+    "title": "Download App",
+    "downloadText": "Download SwapMyContact App"
+  },
+  "premiumDialog": {
+    "title": "SwapMyContact Pro – اشتراك سنوي",
+    "description": "النسخة الأساسية تسمح بملف واحد فقط.\\nمع SwapMyContact Pro يمكنك إنشاء ملفات غير محدودة.",
+    "subscription": "الاشتراك:",
+    "priceLoading": "سيظهر في المتجر",
+    "day": "يوم",
+    "days": "أيام",
+    "week": "أسبوع",
+    "weeks": "أسابيع",
+    "month": "شهر",
+    "months": "أشهر",
+    "year": "سنة",
+    "years": "سنوات",
+    "autoRenew": "يتجدد الاشتراك تلقائيًا ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة.",
+    "billingIOS": "تتم الفوترة من خلال حساب Apple ID الخاص بك. يمكن إدارة الاشتراكات وإلغاؤها في إعدادات Apple ID.",
+    "billingAndroid": "تتم الفوترة من خلال حساب Google Play الخاص بك. يمكن إدارة الاشتراكات وإلغاؤها في إعدادات حساب Google Play.",
+    "cancel": "إلغاء",
+    "unlock": "فتح الآن",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "playTerms": "شروط Google Play",
+    "successTitle": "نجح",
+    "successMessage": "تم تفعيل Premium! يمكنك الآن إنشاء ملفات غير محدودة.",
+    "errorTitle": "خطأ",
+    "errorMessage": "فشل الشراء. يرجى المحاولة مرة أخرى لاحقًا.",
+    "linkError": "تعذر فتح الرابط."
   }
 }

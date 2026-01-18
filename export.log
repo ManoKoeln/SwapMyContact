@@ -1,0 +1,2 @@
+2025-12-24 08:43:22.261 xcodebuild[16620:56557] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path "/var/folders/qb/y624_cbn6jv4_7c3s11_l0hm0000gn/T/SwapContact_2025-12-24_08-43-22.261.xcdistributionlogs".
+2025-12-24 08:43:22.344 xcodebuild[16620:56557] [MT] IDEDistribution: Command line name "app-store" is deprecated. Use "app-store-connect" instead.

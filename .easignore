@@ -1,0 +1,32 @@
+# Build artifacts
+build-*/
+*.aab
+*.apk
+*.ipa
+
+# iOS
+ios/build/
+ios/Pods/
+*.xcworkspace
+*.xcodeproj
+Podfile.lock
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Assets
+assets/*.html
+promo-preview.html
+
+# Extracted builds
+build-12-extracted/
+
+# Credentials
+credentials/
+
+# Other
+.DS_Store
+*.log
+crsqlite-dsym-upload/
