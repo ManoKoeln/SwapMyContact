@@ -2,17 +2,23 @@ const { withAppBuildGradle } = require('@expo/config-plugins');
 
 const withCustomVersionCode = (config) => {
   return withAppBuildGradle(config, (config) => {
-    const { contents } = config.modResults;
+    let contents = config.modResults.contents;
     
-    // Add versionCode from app.json
-    if (contents.includes('versionCode')) {
-      // Replace existing versionCode line
-      config.modResults.contents = contents.replace(
-        /versionCode\s+\d+/g,
-        `versionCode ${config.android.versionCode}`
-      );
-    }
+    const versionCode = config.android?.versionCode || 1;
+    const version = config.version || '1.0.0';
     
+    // Remove the old appJson variable references
+    contents = contents.replace(
+      /def appVersion = appJson\.expo\.version/g,
+      `def appVersion = "${version}"`
+    );
+    
+    contents = contents.replace(
+      /def appVersionCode = appJson\.expo\.android\.versionCode/g,
+      `def appVersionCode = ${versionCode}`
+    );
+    
+    config.modResults.contents = contents;
     return config;
   });
 };
