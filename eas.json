@@ -1,7 +1,7 @@
 {
   "cli": {
     "version": ">= 16.28.0",
-    "appVersionSource": "remote"
+    "appVersionSource": "local"
   },
   "build": {
     "development": {
@@ -19,9 +19,9 @@
       }
     },
     "production": {
-      "autoIncrement": true,
+      "autoIncrement": false,
         "ios": {
-          "image": "macos-14-xcode-16.2"
+          "image": "macos-sequoia-15.6-xcode-26.1"
         },
       "android": {
         "gradleCommand": ":app:bundlePlayRelease"
