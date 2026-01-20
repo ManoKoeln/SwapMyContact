@@ -20,9 +20,6 @@
     },
     "production": {
       "autoIncrement": false,
-      "hooks": {
-        "preBuild": "./eas-hooks/eas-build-pre-build.sh"
-      },
         "ios": {
           "image": "macos-sequoia-15.6-xcode-26.1"
         },
