@@ -8,3 +8,4 @@ ios/
 node_modules
 *.apk
 *.aab
+.expo/

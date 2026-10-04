@@ -4,43 +4,36 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
-import type {WatcherBackend, WatcherBackendChangeEvent} from '../flow-types';
+import type {
+  WatcherBackend,
+  WatcherBackendChangeEvent,
+  WatcherBackendOptions,
+} from '../flow-types';
 
 import {posixPathMatchesPattern} from './common';
-import EventEmitter from 'events';
-import * as path from 'path';
+import EventEmitter from 'node:events';
+import * as path from 'node:path';
 
-export type Listeners = $ReadOnly<{
+export type Listeners = Readonly<{
   onFileEvent: (event: WatcherBackendChangeEvent) => void,
   onError: (error: Error) => void,
 }>;
 
 export class AbstractWatcher implements WatcherBackend {
-  +root: string;
-  +ignored: ?RegExp;
-  +globs: $ReadOnlyArray<string>;
-  +dot: boolean;
-  +doIgnore: (path: string) => boolean;
+  readonly root: string;
+  readonly ignored: ?RegExp;
+  readonly globs: ReadonlyArray<string>;
+  readonly dot: boolean;
+  readonly doIgnore: (path: string) => boolean;
 
   #emitter: EventEmitter = new EventEmitter();
 
-  constructor(
-    dir: string,
-    {
-      ignored,
-      globs,
-      dot,
-    }: $ReadOnly<{
-      ignored: ?RegExp,
-      globs: $ReadOnlyArray<string>,
-      dot: boolean,
-      ...
-    }>,
-  ) {
+  constructor(dir: string, opts: WatcherBackendOptions) {
+    const {ignored, globs, dot} = opts;
     this.dot = dot || false;
     this.ignored = ignored;
     this.globs = globs;
@@ -71,7 +64,7 @@ export class AbstractWatcher implements WatcherBackend {
     // Must be implemented by subclasses
   }
 
-  async stopWatching() {
+  async stopWatching(): Promise<void> {
     this.#emitter.removeAllListeners();
   }
 
