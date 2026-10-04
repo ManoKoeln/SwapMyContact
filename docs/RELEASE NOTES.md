@@ -56,3 +56,37 @@ importFromXing
 importFromWhatsAppBusiness
 Platzhalter {source} in Meldungen ersetzt durch jeweilige Plattform
 
+---------------------------------------------------------------
+Version 0.2.4 BUILD 57 
+
+Im Impressum wird jetzt "Version 0.2.4 (Build 56)" angezeigt.LINKEDIN und XING Daten laden hat nicht funktioniert.
+Die Änderungen sollten verworfen werden und es wurde die letzte gespeicherte Version von Github geladen, die aber nicht aktuell war.
+Die letzen Änderungen wurden noch einmal durchgeführt.
+- Profil- Editor Typdaten speichern und in QR- Code eintragen
+- Premium kaufen. es wurde wieder der richtigen Text eingetragen
+- die Überetzungen wurden teilweise neu gemacht(Menü, Typ).
+- die aktualisierung der Profilübersicht nach Premium de-/aktivierung wurde überarbeitet sodas immer wenn die Profilübersicht aktiviert wird auch die Premiumabfrage stattfindet.
+- ZUSÄTZLICH wurden die Übersetzungen für Premium erstellt
+
+1. Automatische Build-Nummer-Erhöhung deaktiviert:
+
+In eas.json:22 "autoIncrement": false gesetzt
+2. versionName-Problem behoben:
+
+In build.gradle:90 entfernt: def appVersionCode = appJson.expo.android.versionCode (existiert nicht mehr in app.json)
+In build.gradle:103 entfernt: versionCode appVersionCode (wird von EAS remote gesetzt)
+Die versionName wird weiterhin aus appJson.expo.version ("0.2.4") gelesen
+3. package wieder hinzugefügt:
+
+In app.json:40 "package" wieder eingefügt (wird zwar ignoriert, aber verhindert Fehler wenn Scripts darauf zugreifen)
+----------------------------------------------------
+Testdetails:
+
+App startet → Prüft LinkedIn, Xing, Whatsapp - Business -Installation
+Wenn installiert → Auswahlfeld: "Daten von LinkedIn, Xing, Whatsapp - Business " wird angezeigt
+User klickt Button → Kontakt-Berechtigung wird angefragt
+Kontakte werden gelesen → LinkedIn, Xing, Whatsapp - Business -Daten gesucht
+Neues Profil wird erstellt mit allen Daten
+EditProfile-Screen öffnet sich automatisch
+bei Mehrfacheintrag in der Beschreibung soll hinter den Eintrag ein Zähler
+Übersetzungen testen

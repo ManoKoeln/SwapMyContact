@@ -84,10 +84,10 @@ def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInRelea
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 // Read version from app.json (central version management)
-import groovy.json.JsonSlurper
-def appJson = new JsonSlurper().parseText(file("$projectRoot/app.json").text)
-def appVersion = appJson.expo.version
-def appVersionCode = appJson.expo.android.versionCode
+def appJsonFile = file("../../app.json")
+def appJsonText = appJsonFile.text
+def appVersion = (appJsonText =~ /"version":\s*"([^"]+)"/)[0][1]
+def appVersionCode = (appJsonText =~ /"versionCode":\s*(\d+)/)[0][1].toInteger()
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -157,7 +157,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             crunchPngs (findProperty('android.enablePngCrunchInReleaseBuilds')?.toBoolean() ?: true)
             ndk {
-                debugSymbolLevel 'NONE'
+                debugSymbolLevel 'SYMBOL_TABLE'
             }
         }
     }
