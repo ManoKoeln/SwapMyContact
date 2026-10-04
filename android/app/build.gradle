@@ -81,6 +81,41 @@ def enableMinifyInReleaseBuilds = (findProperty('android.enableMinifyInReleaseBu
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+/**
+ * Auto-incrementing versionCode.
+ *
+ * The current value is stored in android/version.properties (VERSION_CODE).
+ * For RELEASE bundle/APK builds (bundleRelease / assembleRelease / :app:bundle* / :app:assemble*Release),
+ * the value is incremented by 1 and written back BEFORE the build, so every uploaded
+ * artifact automatically gets a fresh, higher versionCode.
+ * For debug builds the current value is used as-is (no increment, no write).
+ */
+ext.resolveVersionCode = {
+    def versionFile = new File(rootProject.projectDir, "version.properties")
+    def props = new Properties()
+    if (versionFile.exists()) {
+        versionFile.withInputStream { props.load(it) }
+    }
+    int current = (props.getProperty("VERSION_CODE") ?: "0").trim().toInteger()
+
+    // Detect whether this invocation builds a release artifact.
+    def requested = gradle.startParameter.taskNames.join(" ").toLowerCase()
+    boolean isRelease = requested.contains("bundlerelease") ||
+            requested.contains("assemblerelease") ||
+            (requested.contains("release") && (requested.contains("bundle") || requested.contains("assemble")))
+
+    if (isRelease) {
+        int next = current + 1
+        props.setProperty("VERSION_CODE", next.toString())
+        versionFile.withOutputStream { props.store(it, "Auto-managed build number (last USED versionCode)") }
+        println "versionCode: auto-incremented ${current} -> ${next} (release build)"
+        return next
+    }
+
+    println "versionCode: using ${current} (non-release build, not incremented)"
+    return current
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -92,7 +127,7 @@ android {
         applicationId 'com.businesscard2025.swapcontactnew'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 63
+        versionCode project.ext.resolveVersionCode()
         versionName "0.2.5"
 
         // Select the "play" flavor of react-native-iap (which also defines an "amazon" flavor)
