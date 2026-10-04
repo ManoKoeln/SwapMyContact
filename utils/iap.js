@@ -132,6 +132,32 @@ export const purchasePremium = async () => {
     await initIAP();
     const productId = PRODUCT_IDS[0];
 
+    // 1) Prüfen, ob bereits ein aktives Abo vorhanden ist → dann wiederherstellen statt neu kaufen
+    try {
+      const existing = await RNIap.getAvailablePurchases();
+      const owned = Array.isArray(existing)
+        ? existing.find((p) => PRODUCT_IDS.includes(p.productId) || PRODUCT_IDS.includes(p.sku))
+        : null;
+      if (owned) {
+        // Falls auf Android noch nicht bestätigt, jetzt acknowledgen (sonst storniert Google den Kauf)
+        if (Platform.OS === 'android' && owned.purchaseToken && owned.isAcknowledgedAndroid === false) {
+          try {
+            await RNIap.acknowledgePurchaseAndroid({
+              token: owned.purchaseToken,
+              developerPayload: owned.developerPayloadAndroid,
+            });
+          } catch (ackError) {
+            console.warn('IAP: Acknowledge des bestehenden Abos fehlgeschlagen:', ackError);
+          }
+        }
+        await persistPremium(true, owned.transactionReceipt || owned.purchaseToken);
+        console.log('IAP: Bestehendes Abo erkannt und wiederhergestellt');
+        return owned;
+      }
+    } catch (checkError) {
+      console.warn('IAP: Konnte bestehende Käufe nicht prüfen, versuche regulären Kauf:', checkError);
+    }
+
     // Load subscription to retrieve Android offer token(s)
     const subs = await RNIap.getSubscriptions({ skus: [productId] });
     const sub = Array.isArray(subs) ? subs.find((s) => s.productId === productId || s.sku === productId) : null;
@@ -181,6 +207,24 @@ export const purchasePremium = async () => {
     console.log('IAP: Purchase completed and persisted');
     return purchase;
   } catch (error) {
+    // "Bereits im Besitz" ist kein echter Fehler → Abo wiederherstellen und Premium freischalten
+    const alreadyOwned =
+      error?.code === 'E_ALREADY_OWNED' ||
+      /already own|bereits ein|already subscribed|itemAlreadyOwned/i.test(error?.message || '');
+    if (alreadyOwned) {
+      try {
+        const restored = await restorePurchases();
+        if (restored) {
+          console.log('IAP: Abo war bereits vorhanden und wurde wiederhergestellt');
+          return { alreadyOwned: true };
+        }
+      } catch (restoreError) {
+        console.error('IAP: Wiederherstellung nach "already owned" fehlgeschlagen:', restoreError);
+      }
+      // Auch ohne erfolgreiche Wiederherstellung Premium lokal aktivieren
+      await persistPremium(true);
+      return { alreadyOwned: true };
+    }
     console.error('Purchase failed:', error);
     throw new Error(mapErrorToMessage(error));
   }

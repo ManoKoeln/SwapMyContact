@@ -38,7 +38,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.businesscard2025.swapcontactnew",
-      "versionCode": 62,
+      "versionCode": 63,
       "permissions": [
         "INTERNET",
         "READ_EXTERNAL_STORAGE",

@@ -92,7 +92,7 @@ android {
         applicationId 'com.businesscard2025.swapcontactnew'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 62
+        versionCode 63
         versionName "0.2.5"
 
         // Select the "play" flavor of react-native-iap (which also defines an "amazon" flavor)
