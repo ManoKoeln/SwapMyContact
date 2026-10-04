@@ -1,134 +1,87 @@
-# 16 KB Page Size Support - Finale Lösungsdokumentation
+# 16 KB Page Size Support – Aktuelle Lösungsdokumentation
+
+> Stand: Oktober 2026 · Gelöst durch Upgrade auf **Expo SDK 54**
 
 ## Problem
-Google Play verlangt seit Januar 2025, dass alle Apps 16 KB Speicherseiten unterstützen müssen.
 
-Fehlermeldung:
+Google Play verlangt, dass Apps mit `targetSdk` 35+ **16-KB-Speicherseiten** unterstützen. Alle nativen `.so`-Bibliotheken müssen dafür mit einem 16-KB-ausgerichteten LOAD-Segment (`align = 2**14`) ausgeliefert werden.
+
+Typische Fehlermeldung in der Play Console:
 ```
 Deine App unterstützt keine Speicherseiten mit 16 KB.
 ```
 
-## Durchgeführte Änderungen
+## Warum die früheren Versuche (SDK 52) nicht ausreichten
 
-### 1. Android Gradle Plugin aktualisiert
-**Datei**: `android/build.gradle`
-- Upgrade von 8.4.2 auf **8.7.3** (minimum erforderlich für 16KB Support)
+Unter **Expo SDK 52 / React Native 0.76.9** wurden zwar die selbst kompilierten Module (Expo-Module, Reanimated, RNScreens) über `cFlags`/`ldFlags` mit `max-page-size=16384` korrekt 16-KB-aligned, aber die **vorkompilierten Prebuilt-Libraries** blieben bei 4 KB:
 
-### 2. NDK Version aktualisiert
-**Datei**: `android/build.gradle`
-- NDK von 26.1.10909125 auf **27.0.12077973** (erforderlich für 16KB)
+| ❌ Blieb 4 KB (2\*\*12) | Herkunft |
+|---|---|
+| `libhermes.so`, `libhermestooling.so` | Hermes (RN 0.76) |
+| `libreactnative.so`, `libjsi.so` | React Native Core |
+| `libfbjni.so`, `libc++_shared.so` | RN/NDK Runtime |
+| Fresco-Libs (`libimagepipeline.so`, `libgifimage.so`, …) | Bild-Bibliotheken |
 
-### 3. Nur 64-bit Architektur
-**Grund**: Nur 64-bit ARM (arm64-v8a) unterstützt 16 KB Seiten. 32-bit (armeabi-v7a) unterstützt diese **nicht**.
+Diese Binaries werden fertig geliefert und lassen sich mit eigenen Build-Flags **nicht** neu ausrichten. 16-KB-aligned sind sie erst in neueren RN-Versionen.
 
-**Dateien geändert**:
-- `android/app/build.gradle`: `ndk { abiFilters 'arm64-v8a' }`
-- `android/gradle.properties`: `reactNativeArchitectures=arm64-v8a`
-- `app.json`: `"abiFilters": ["arm64-v8a"]`
+## Die Lösung: Upgrade auf Expo SDK 54
 
-### 4. extractNativeLibs deaktiviert
-**Datei**: `android/app/src/main/AndroidManifest.xml`
-- `android:extractNativeLibs="false"` (war vorher `true`)
-- Dies ist **kritisch** für 16KB Support
+Ab **React Native 0.81 (Expo SDK 54)** sind alle Prebuilt-Libraries (Hermes, reactnative, jsi, fbjni, c++_shared, Fresco) bereits 16-KB-aligned.
 
-### 5. Manifest-Deklaration für 16KB
-**Datei**: `android/app/src/main/AndroidManifest.xml`
-```xml
-<!-- Declare support for 16KB page sizes (required by Google Play) -->
-<uses-native-library
-  android:name="libgui.so"
-  android:required="false" />
+### Durchgeführte Kern-Änderungen
 
-<!-- Support for 16KB page size devices -->
-<supports-gl-texture android:name="GL_EXT_texture_filter_anisotropic"/>
-```
+1. **Expo SDK 52 → 54**, React Native 0.76.9 → **0.81.5**, React 18.3 → **19.1**
+2. **New Architecture aktiviert** (`newArchEnabled=true`) – ab RN 0.81 Standard
+3. **Reanimated 3 → 4** (+ `react-native-worklets`)
+4. **Natives Projekt neu generiert** mit `npx expo prebuild --clean`
+5. **targetSdk / compileSdk 36**, buildToolsVersion 36.0.0, NDK 27
+6. Konfiguration über `expo-build-properties` in `app.json`
 
-### 6. Legacy Packaging deaktiviert
-**Datei**: `app.json`
-- `useLegacyPackaging: false` (war vorher `true`)
-- Wichtig für 16KB Support
+### Architektur-Hinweis
 
-### 7. Production Keystore konfiguriert
-**Datei**: `android/app/build.gradle`
-- Release Signing Config hinzugefügt
-- Verwendet korrekten Keystore: `credentials/android/keystore.jks`
-- SHA1: `8C:FE:67:80:80:4E:D3:9F:23:D0:58:DD:94:89:75:5F:2D:DF:2C:C5`
-
-### 8. Build-Konfiguration
-**Wichtig**: 
-- minSdkVersion: 24
-- targetSdkVersion: 35
-- compileSdkVersion: 35
-- buildToolsVersion: 35.0.0
-- AGP: 8.7.3
-- NDK: 27.0.12077973
-
-## Zusammenfassung der kritischen Änderungen
-
-✅ **Nur arm64-v8a** (keine 32-bit mehr)
-✅ **extractNativeLibs="false"** im Manifest
-✅ **Android Gradle Plugin 8.7.3**
-✅ **NDK 27.0.12077973**
-✅ **Production Keystore** mit korrektem SHA1
-✅ **Manifest-Deklarationen** für 16KB Support
-✅ **useLegacyPackaging: false**
-✅ **VersionCode 44**
-
-## Lokales Bauen (ohne Expo Credits)
-
-```bash
-# Java 17 muss installiert sein
-brew install openjdk@17
-
-# Build-Script ausführen
-./build_local_aab.sh
-```
-
-Das AAB wird nach `build-[timestamp].aab` kopiert.
-
-## Wichtige Hinweise
-
-### Gerätkompatibilität
-⚠️ Durch die Beschränkung auf arm64-v8a werden **sehr alte 32-bit ARM Geräte** nicht mehr unterstützt.
-- Betroffen: Geräte älter als ca. 2015-2016
-- Die allermeisten modernen Android-Geräte (>98%) verwenden arm64-v8a
-
-### Native Bibliotheken
-Die App verwendet folgende native Libs (alle neu kompiliert für arm64-v8a):
-- `libcrsqlite.so` (expo-sqlite)
-- `libreactnative.so`
-- `libhermes.so`
-- `libreanimated.so`
-- `libc++_shared.so`
-
-### Warum der Fehler mehrmals auftrat
-
-1. **Erster Versuch**: 32-bit Architekturen waren noch enthalten
-2. **Zweiter Versuch**: `extractNativeLibs=true` war noch aktiv
-3. **Dritter Versuch**: NDK 26 statt 27 verwendet
-4. **Vierter Versuch**: Manifest-Deklarationen fehlten
+Es werden weiterhin **arm64-v8a und armeabi-v7a** gebaut. 16-KB-Seiten betreffen nur 64-Bit-Geräte; 32-Bit bleibt für ältere Geräte erhalten, ohne die 16-KB-Konformität auf 64-Bit zu beeinträchtigen.
 
 ## Verifikation
 
-Nach dem Build prüfen:
-```bash
-# Nur arm64-v8a sollte enthalten sein
-unzip -l build-xxx.aab | grep "\.so$"
+Alle 22 nativen Libraries im Release-AAB sind **16-KB-aligned** (`align = 2**14`), inkl. der zuvor problematischen `libhermes.so`, `libreactnative.so`, `libjsi.so`, `libfbjni.so`, `libc++_shared.so`.
 
-# Keystore-Fingerabdruck prüfen
-keytool -printcert -jarfile build-xxx.aab
+### Prüf-Skript (arm64-v8a)
+
+```bash
+AAB=android/app/build/outputs/bundle/release/app-release.aab
+mkdir -p /tmp/so16 && cd /tmp/so16
+unzip -o -q "$OLDPWD/$AAB" 'base/lib/arm64-v8a/*.so'
+
+NDK=$(ls -d ~/Library/Android/sdk/ndk/* | tail -1)
+OBJDUMP=$(find "$NDK" -name 'llvm-objdump' | head -1)
+
+bad=0
+for f in base/lib/arm64-v8a/*.so; do
+  a=$("$OBJDUMP" -p "$f" | awk '/LOAD/{print $NF; exit}')
+  printf '%-45s align=%s\n' "$(basename "$f")" "$a"
+  [ "$a" != "2**14" ] && bad=$((bad+1))
+done
+echo "Nicht-16KB: $bad"   # erwartet: 0
 ```
 
-## Troubleshooting
+## Verwandte Build-Themen (im selben Upgrade gelöst)
 
-Falls der Fehler weiterhin auftritt:
-1. AAB mit `unzip -l build-xxx.aab | grep "\.so$"` prüfen
-2. Sicherstellen, dass **keine** armeabi-v7a, x86, oder x86_64 libs enthalten sind
-3. Nur arm64-v8a sollte vorhanden sein
-4. `extractNativeLibs="false"` im Manifest verifizieren
-5. NDK 27+ verwenden
+- **Google Play Billing 8.0.0**: `playBillingSdkVersion = "8.0.0"` in `android/build.gradle`; `react-native-iap` 13.0.4 via `patch-package` an Billing 8 und RN 0.81 angepasst (siehe `patches/react-native-iap+13.0.4.patch`).
+- **Automatischer versionCode**: `android/version.properties` + `resolveVersionCode()` in `android/app/build.gradle` zählen bei jedem Release-Build (`bundleRelease`/`assembleRelease`) automatisch hoch.
+- **Signierung**: Release wird mit dem Upload-Key `credentials/android/keystore.jks` signiert.
+
+## Release bauen
+
+```bash
+# AAB für den Play-Upload (versionCode wird automatisch inkrementiert)
+android/gradlew -p android bundleRelease
+
+# Ergebnis:
+# android/app/build/outputs/bundle/release/app-release.aab
+```
 
 ## Referenzen
-- [Google Play 16KB Support](https://developer.android.com/guide/practices/page-sizes)
-- [Android Gradle Plugin 8.7 Release Notes](https://developer.android.com/build/releases/gradle-plugin)
-- [NDK 27 Release Notes](https://developer.android.com/ndk/downloads)
+
+- [Google Play 16 KB Support](https://developer.android.com/guide/practices/page-sizes)
+- [Expo SDK 54 Changelog](https://expo.dev/changelog)
+- [React Native 0.81 Release Notes](https://reactnative.dev/blog)
