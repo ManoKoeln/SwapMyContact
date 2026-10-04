@@ -38,7 +38,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.businesscard2025.swapcontactnew",
-      "versionCode": 62,
+      "versionCode": 63,
       "permissions": [
         "INTERNET",
         "READ_EXTERNAL_STORAGE",
@@ -53,23 +53,26 @@
         "expo-build-properties",
         {
           "ios": {
-            "newArchEnabled": false,
+            "newArchEnabled": true,
             "flipper": false
           },
           "android": {
-            "newArchEnabled": false,
+            "newArchEnabled": true,
             "enableProguardInReleaseBuilds": true,
             "enableShrinkResourcesInReleaseBuilds": true,
-            "compileSdkVersion": 35,
-            "targetSdkVersion": 35,
-            "buildToolsVersion": "35.0.0",
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "buildToolsVersion": "36.0.0",
             "minSdkVersion": 24,
             "packagingOptions": {
               "jniLibs": {
                 "useLegacyPackaging": false
               }
             },
-            "abiFilters": ["arm64-v8a", "armeabi-v7a"],
+            "abiFilters": [
+              "arm64-v8a",
+              "armeabi-v7a"
+            ],
             "ndkVersion": "27.0.12077973",
             "cFlags": "-Wl,-z,max-page-size=16384",
             "ldFlags": "-Wl,-z,max-page-size=16384"
@@ -77,7 +80,8 @@
         }
       ],
       "expo-asset",
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-font"
     ],
     "jsEngine": "hermes",
     "extra": {

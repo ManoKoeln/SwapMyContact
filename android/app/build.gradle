@@ -2,9 +2,6 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
-// Apply 16 KB page size support
-apply from: "../16kb-support.gradle"
-
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
 /**
@@ -17,6 +14,7 @@ react {
     hermesCommand = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/sdks/hermesc/%OS-BIN%/hermesc"
     codegenDir = new File(["node", "--print", "require.resolve('@react-native/codegen/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()
 
+    enableBundleCompression = (findProperty('android.enableBundleCompression') ?: false).toBoolean()
     // Use Expo CLI to bundle the app, this ensures the Metro config
     // works correctly with Expo projects.
     cliFile = new File(["node", "--print", "require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })"].execute(null, rootDir).text.trim())
@@ -66,9 +64,9 @@ react {
 }
 
 /**
- * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ * Set this to true in release builds to optimize the app using [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization).
  */
-def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInReleaseBuilds') ?: false).toBoolean()
+def enableMinifyInReleaseBuilds = (findProperty('android.enableMinifyInReleaseBuilds') ?: false).toBoolean()
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -81,13 +79,42 @@ def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInRelea
  * give correct results when using with locales other than en-US. Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
-// Read version from app.json (central version management)
-def appJsonFile = file("../../app.json")
-def appJsonText = appJsonFile.text
-def appVersion = (appJsonText =~ /"version":\s*"([^"]+)"/)[0][1]
-def appVersionCode = (appJsonText =~ /"versionCode":\s*(\d+)/)[0][1].toInteger()
+/**
+ * Auto-incrementing versionCode.
+ *
+ * The current value is stored in android/version.properties (VERSION_CODE).
+ * For RELEASE bundle/APK builds (bundleRelease / assembleRelease / :app:bundle* / :app:assemble*Release),
+ * the value is incremented by 1 and written back BEFORE the build, so every uploaded
+ * artifact automatically gets a fresh, higher versionCode.
+ * For debug builds the current value is used as-is (no increment, no write).
+ */
+ext.resolveVersionCode = {
+    def versionFile = new File(rootProject.projectDir, "version.properties")
+    def props = new Properties()
+    if (versionFile.exists()) {
+        versionFile.withInputStream { props.load(it) }
+    }
+    int current = (props.getProperty("VERSION_CODE") ?: "0").trim().toInteger()
+
+    // Detect whether this invocation builds a release artifact.
+    def requested = gradle.startParameter.taskNames.join(" ").toLowerCase()
+    boolean isRelease = requested.contains("bundlerelease") ||
+            requested.contains("assemblerelease") ||
+            (requested.contains("release") && (requested.contains("bundle") || requested.contains("assemble")))
+
+    if (isRelease) {
+        int next = current + 1
+        props.setProperty("VERSION_CODE", next.toString())
+        versionFile.withOutputStream { props.store(it, "Auto-managed build number (last USED versionCode)") }
+        println "versionCode: auto-incremented ${current} -> ${next} (release build)"
+        return next
+    }
+
+    println "versionCode: using ${current} (non-release build, not incremented)"
+    return current
+}
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -100,26 +127,13 @@ android {
         applicationId 'com.businesscard2025.swapcontactnew'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode appVersionCode
-        versionName appVersion
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        
-        ndk {
-            abiFilters 'arm64-v8a', 'armeabi-v7a'
-        }
-        
-        // Explicitly set testOnly to false
-        manifestPlaceholders = [testOnly:"false"]
-        
-        externalNativeBuild {
-            cmake {
-                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON",
-                          "-DCMAKE_TOOLCHAIN_FILE=${projectDir}/16kb.cmake",
-                          "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
-                          "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
-                cFlags "-Wl,-z,max-page-size=16384"
-            }
-        }
+        versionCode project.ext.resolveVersionCode()
+        versionName "0.2.5"
+
+        // Select the "play" flavor of react-native-iap (which also defines an "amazon" flavor)
+        missingDimensionStrategy 'store', 'play'
+
+        buildConfigField "String", "REACT_NATIVE_RELEASE_LEVEL", "\"${findProperty('reactNativeReleaseLevel') ?: 'stable'}\""
     }
     signingConfigs {
         debug {
@@ -135,59 +149,29 @@ android {
             keyPassword '09f7a2305c64dfb6c0b20fc1bf584b0c'
         }
     }
-    flavorDimensions = ["store"]
-    productFlavors {
-        play {
-            dimension "store"
-            manifestPlaceholders = [enableCrashReporting:"true", testOnly:"false"]
-        }
-    }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            debuggable true
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            debuggable false
+            // Signed with the Play upload key (credentials/android/keystore.jks)
             signingConfig signingConfigs.release
-            shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
-            minifyEnabled enableProguardInReleaseBuilds
+            def enableShrinkResources = findProperty('android.enableShrinkResourcesInReleaseBuilds') ?: 'false'
+            shrinkResources enableShrinkResources.toBoolean()
+            minifyEnabled enableMinifyInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            crunchPngs (findProperty('android.enablePngCrunchInReleaseBuilds')?.toBoolean() ?: true)
-            ndk {
-                debugSymbolLevel 'SYMBOL_TABLE'
-            }
+            def enablePngCrunchInRelease = findProperty('android.enablePngCrunchInReleaseBuilds') ?: 'true'
+            crunchPngs enablePngCrunchInRelease.toBoolean()
         }
     }
     packagingOptions {
         jniLibs {
-            useLegacyPackaging (findProperty('expo.useLegacyPackaging')?.toBoolean() ?: false)
+            def enableLegacyPackaging = findProperty('expo.useLegacyPackaging') ?: 'false'
+            useLegacyPackaging enableLegacyPackaging.toBoolean()
         }
     }
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
-    }
-}
-
-// Remove android:testOnly="true" from merged manifest (Lösung 2)
-afterEvaluate {
-    tasks.named("processPlayReleaseMainManifest").configure {
-        doLast {
-            def manifestFile = new File(
-                "$buildDir/intermediates/merged_manifest/playRelease/processPlayReleaseMainManifest/AndroidManifest.xml"
-            )
-            if (manifestFile.exists()) {
-                def text = manifestFile.text
-                def originalText = text
-                text = text.replaceAll('android:testOnly="true"', '')
-                if (text != originalText) {
-                    manifestFile.write(text)
-                    println "✓ Removed android:testOnly=\"true\" from manifest"
-                }
-            }
-        }
     }
 }
 
@@ -221,15 +205,15 @@ dependencies {
 
     if (isGifEnabled) {
         // For animated gif support
-        implementation("com.facebook.fresco:animated-gif:${reactAndroidLibs.versions.fresco.get()}")
+        implementation("com.facebook.fresco:animated-gif:${expoLibs.versions.fresco.get()}")
     }
 
     if (isWebpEnabled) {
         // For webp support
-        implementation("com.facebook.fresco:webpsupport:${reactAndroidLibs.versions.fresco.get()}")
+        implementation("com.facebook.fresco:webpsupport:${expoLibs.versions.fresco.get()}")
         if (isWebpAnimatedEnabled) {
             // Animated webp support
-            implementation("com.facebook.fresco:animated-webp:${reactAndroidLibs.versions.fresco.get()}")
+            implementation("com.facebook.fresco:animated-webp:${expoLibs.versions.fresco.get()}")
         }
     }
 
